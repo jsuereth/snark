@@ -7,8 +7,37 @@ sealed trait TwitterCommand {
   def run(client: Twitter): Unit
 }
 
+object TwitterCommand {
+  import sbt.complete._
+  import DefaultParsers._
 
-case class ListMentions() extends TwitterCommand {
+  private val restOfLineParser = any.* map (_.mkString(""))
+
+  val parser: Parser[TwitterCommand] = {
+    val restOfLineParser = any.* map (_.mkString(""))
+    val exit = token("exit" ^^^ Exit)
+    val listMentions = token("mentions" ^^^ ListMentions)
+    val tweet = {
+      ((token("tweet") ~ Space) ~> restOfLineParser) map {
+        text => Tweet(text)
+      }
+    }
+    val search = {
+      ((token("search") ~ Space) ~> restOfLineParser) map {
+        text => Search(text)
+      }
+    }
+    exit | listMentions| tweet | search
+  }
+
+
+}
+
+object Exit extends TwitterCommand {
+  override def run(client: Twitter): Unit = ()
+}
+
+object ListMentions extends TwitterCommand {
   override def run(client: Twitter): Unit = {
     val mentions = client.timelines().getMentionsTimeline()
     System.out.println(s"-- MENTIONS --")

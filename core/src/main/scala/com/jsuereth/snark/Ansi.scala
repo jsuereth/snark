@@ -1,5 +1,7 @@
 package com.jsuereth.snark
 
+import sbt.complete.Parser
+
 
 // TODO - a nice ansii api.
 object Ansi {
@@ -22,4 +24,8 @@ object Ansi {
   def withAnsiCode(in: String, msg: String) =
     // TODO - disable ANSI if not i nappropriate terminal.
    s"$in$msg${Console.RESET}"
+
+
+
+
 }

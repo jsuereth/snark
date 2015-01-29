@@ -1,0 +1,23 @@
+
+[scala]
+  version: auto
+[app]
+  org: com.jsuereth.snark
+  name: snark-core_2.11
+  version: 0.1
+  class:   com.jsuereth.snark.Main
+  cross-versioned: false
+
+[repositories]
+  bintray-jsuereth-libs: http://dl.bintray.com/jsuereth/libs-and-utils
+  maven-central
+  typesafe-ivy-releases: https://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext], bootOnly
+
+[boot]
+  directory: ${sbt.boot.directory-${sbt.global.base-${user.home}/.sbt}/boot/}
+
+[ivy]
+  ivy-home: ${sbt.ivy.home-${user.home}/.ivy2/}
+  checksums: ${sbt.checksums-sha1,md5}
+  override-build-repos: ${sbt.override.build.repos-false}
+  repository-config: ${sbt.repository.config-${sbt.global.base-${user.home}/.sbt}/repositories}
